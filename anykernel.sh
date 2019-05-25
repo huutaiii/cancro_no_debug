@@ -35,7 +35,7 @@ dump_boot;
 # begin ramdisk changes
 
 backup_file default.prop
-busybox sed -i 's/ro.debuggable=1/ro.debuggable=0/' default.prop
+replace_line default.prop "ro.debuggable=1" "ro.debuggable=0"
 
 # end ramdisk changes
 
