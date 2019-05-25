@@ -32,12 +32,15 @@ chown -R root:root $ramdisk/*;
 ## AnyKernel install
 dump_boot;
 
-# begin ramdisk changes
+### begin ramdisk changes
 
 backup_file default.prop
 replace_line default.prop "ro.debuggable=1" "ro.debuggable=0"
 
-# end ramdisk changes
+backup_file init.qcom.usb.sh
+sed -i -e '1h;2,$H;$!d;g' -re 's|then\n*[ \t]*setprop persist.sys.usb.config mtp,adb;?\n*[ \t]*else\n*[ \t]*setprop persist.sys.usb.config mtp,adb|then setprop persist.sys.usb.config mtp,adb; else setprop persist.sys.usb.config none|' init.qcom.usb.sh
+
+### end ramdisk changes
 
 write_boot;
 
